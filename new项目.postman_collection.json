@@ -1,0 +1,780 @@
+{
+	"info": {
+		"_postman_id": "498995f0-85b6-476c-b095-dcd13a4ba5e5",
+		"name": "new项目",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "项目",
+			"item": [
+				{
+					"name": "查询项目",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/projects",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "token ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKa1pXWmhkV3gwSW4wOjFrMEVMYTpYWXVJaGQ2aTZveXVOak9XQjlxdDJLWmJyVHc.ZXlKMWMyVnlibUZ0WlNJNkluaDFaWEJzSWl3aWFXRjBJam94TlRrMU9EazVORFF5TGpNek9UYzRNRGg5OjFrMEVMYTo5LWdyRk1JdGFtUFY4bnpZNVFzTEZ4bWVvT0E.3b2b535b9b420cbb3c455bc2d1e0602a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改项目",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "token {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"接口测试项目\",\r\n\"version\": \"v0.1\",\r\n\"type\": \"App\",\r\n\"status\": true,\r\n\"description\": \"测试项目\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/projects/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"projects",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增项目",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"接口测试项目\",\r\n\"version\": \"v0.1\",\r\n\"type\": \"App\",\r\n\"status\": true,\r\n\"description\": \"测试项目\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/projects",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "用户",
+			"item": [
+				{
+					"name": "登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36c24320-28d6-44d1-bf8e-d2b3b45c7dca",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody)//序列化数据\r",
+									"//tests['团队ID']=responseBody.has('corpId')\r",
+									"var data = JSON.parse(jsonData.data)\r",
+									"\r",
+									"if (data.length !==0){\r",
+									"    \r",
+									"pm.globals.set(\"token\", data.data);//设置变量名以及变量名对应的数据\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"xuepl\",\r\n\"password\":\"guoya2018\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"xuepl\",\r\n\"password\":\"guoya2018\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "鉴权测试",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/test/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "主机",
+			"item": [
+				{
+					"name": "查询主机列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/projects",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "token ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKa1pXWmhkV3gwSW4wOjFrMEVMYTpYWXVJaGQ2aTZveXVOak9XQjlxdDJLWmJyVHc.ZXlKMWMyVnlibUZ0WlNJNkluaDFaWEJzSWl3aWFXRjBJam94TlRrMU9EazVORFF5TGpNek9UYzRNRGg5OjFrMEVMYTo5LWdyRk1JdGFtUFY4bnpZNVFzTEZ4bWVvT0E.3b2b535b9b420cbb3c455bc2d1e0602a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增主机",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"project_id\":1,\r\n\"name\":\"生产环境\",\r\n\"host\":\"http://qa.yansl.com:8084\",\r\n\"description\":\"描述信息\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/hosts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"hosts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改主机",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"project_id\":1,\r\n\"name\":\"生产环境\",\r\n\"host\":\"http://mall.yansl.com:8084\",\r\n\"description\":\"描述信息\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/v01/hosts/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"v01",
+								"hosts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "测试用例集",
+			"item": [
+				{
+					"name": "新增测试用例集",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"project_id\":1,\r\n\"name\":\"后台项目\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/suites",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"suites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询测试用例集",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/suites",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"suites"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "测试用例",
+			"item": [
+				{
+					"name": "新增测试用例",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"suite_id\":1,\r\n\"name\":\"登录接口测试\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/cases",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"cases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询测试用例",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"project_id\":1,\r\n\"name\":\"后台项目\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/cases",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"cases"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "api接口",
+			"item": [
+				{
+					"name": "新增接口用例",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"case_id\":1,\r\n\"name\":\"登录接口全字段正常流测试\",\r\n\"method\":\"POST\",\r\n\"url\":\"/login\",\r\n\"headers\":\"[{\\\"Content-Type\\\":\\\"application/json\\\"}]\",\r\n\"body\":\"{\\\"pwd\\\": \\\"xue123\\\",\\\"userName\\\": \\\"xue123\\\"}\",\r\n\"APIAssert\":[{\"type\":\"json\",\"pattern\":\"$.message\",\"expect\":\"登录成功\"}],\r\n\"APIRelate\":[{\"name\":\"token\",\"pattern\":\"$.data.token\",\"type\":\"json\"}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/api",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询接口",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"case_id\":1,\r\n\"name\":\"登录接口全字段正常流测试\",\r\n\"method\":\"POST\",\r\n\"url\":\"/login\",\r\n\"headers\":\"[{\\\"Content-Type\\\":\\\"application/json\\\"}]\",\r\n\"body\":\"{\\\"pwd\\\": \\\"xue123\\\",\\\"userName\\\": \\\"xue123\\\"}\",\r\n\"APIAssert\":[{\"type\":\"json\",\"pattern\":\"$.message\",\"expect\":\"登录成功\"}],\r\n\"APIRelate\":[{\"name\":\"token\",\"pattern\":\"$.data.token\",\"type\":\"json\"}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/api",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "断言",
+			"item": [
+				{
+					"name": "新增接口断言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"api_id\":10,\r\n\"type\":\"json\",\r\n\"pattern\":\"$.message\",\r\n\"expect\":\"登录成功\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/asserts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"asserts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "接口串联",
+			"item": [
+				{
+					"name": "新增接口串联",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"api_id\":10,\r\n\"name\":\"token\",\"pattern\":\"$.data.token\",\"type\":\"json\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/asserts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"asserts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "运行接口用例",
+			"item": [
+				{
+					"name": "运行接口用例",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"api_id\":2,\r\n\"host_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/runApi",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"runApi"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "查询接口测试结果",
+			"item": [
+				{
+					"name": "查询接口运行结果",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"type": "text",
+								"value": "token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"api_id\":10,\r\n\"host_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8010/v01/runapi",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8010",
+							"path": [
+								"v01",
+								"runapi"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -156,8 +156,16 @@ class API(viewsets.ModelViewSet):
         case = models.TestCase.objects.filter(id=case_id).first()
         if "headers" in data:
             data["headers"] = form_to_json(data["headers"])
-        if "params" in data:
+
+        if data["dataType"]== 'formdata' and "params" in data:
             data["params"] = form_to_json(data["params"])
+            data["body"] = None
+        elif(data["dataType"]== 'raw'):
+            data["params"]=None
+        else:
+            data["body"] = None
+            data["params"] = None
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         api = serializer.save(case=case)

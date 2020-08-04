@@ -22,13 +22,6 @@ urlpatterns = [
     re_path(r'^api/(?P<pk>\d+)/?$',
             views.API.as_view({"get": "retrieve", "put": "update", "delete": "destroy"})),
 
-    re_path(r'^asserts/?$', views.APIAssert.as_view({"get": "list", "post": "create"})),
-    re_path(r'^asserts/(?P<pk>\d+)/?$',
-            views.APIAssert.as_view({"get": "retrieve", "put": "update", "delete": "destroy"})),
-
-    re_path(r'^relates/?$', views.APIRelate.as_view({"get": "list", "post": "create"})),
-    re_path(r'^relates/(?P<pk>\d+)/?$',
-            views.APIRelate.as_view({"get": "retrieve", "put": "update", "delete": "destroy"})),
 
     re_path(r'^runApi/?$', views.RunAPI.as_view()),
     re_path(r'^getApiResult/(?P<pk>\d+)/?$', views.GetResult.as_view()),

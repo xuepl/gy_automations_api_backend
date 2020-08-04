@@ -105,8 +105,12 @@ class API(BaseModel):
         ("PUT", "PUT"),
         ("DELETE", "DELETE"),
     )
+    data_type_choice = (('formdata','formdata'),('raw','raw'))
+    http_choice = (('HTTP', 'HTTP'), ('HTTPS', 'HTTPS'))
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE, verbose_name='用例', related_name="case_api")
     name = models.CharField(max_length=50, verbose_name='名称')
+    dataType = models.CharField(max_length=50, verbose_name='数据类型',choices=data_type_choice)
+    http = models.CharField(max_length=50, verbose_name='协议名称',choices=http_choice)
     method = models.CharField(max_length=10, verbose_name='请求方法', choices=method_choice)
     url = models.CharField(max_length=100, verbose_name='接口地址')
     headers = models.TextField( blank=True, null=True,verbose_name='请求头')
@@ -170,7 +174,8 @@ class APIRelate(BaseModel):
     name = models.CharField(max_length=50, verbose_name='变量名')
     type = models.CharField(max_length=50, verbose_name='提取方式', choices=relate_choice)
     pattern = models.CharField(max_length=50, verbose_name='正则或者jsonpath表达式')
-    value = models.TextField(  blank=True, null=True, verbose_name='提取的值')
+    value = models.TextField(blank=True, null=True, verbose_name='提取的值')
+
 
 
     def __unicode__(self):

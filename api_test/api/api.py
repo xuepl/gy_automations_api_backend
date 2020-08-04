@@ -1,9 +1,11 @@
 # 获取主机地址
 import json
 import re
+import time
 
 import jsonpath
 import requests
+from django.utils import timezone
 from rest_framework.response import Response
 
 from .. import models
@@ -74,7 +76,7 @@ def run_api(host_id, api_id):
     elif params:
         r = requests.request(method=method, url=url, headers=headers, data=params)
     elif body:
-        r = requests.request(method=method, url=url, headers=headers, data=body)
+        r = requests.request(method=method, url=url, headers=headers, data=body.encode('utf-8'))
     else:
         r = requests.request(method=method, url=url, headers=headers)
     save_request_result(api_id,r)
@@ -89,7 +91,7 @@ def save_request_result(api_id,response):
     data["request_method"] = r.request.method
     data["request_url"] = r.request.url
     data["request_headers"] = json.dumps(dict(r.request.headers))
-    data["request_body"] = str(r.request.body)
+    data["request_body"] = r.request.body.decode('utf-8')
     data["status_code"] = r.status_code
     data["response_headers"] = json.dumps(dict(r.headers))
     data["response_body"] = r.text
@@ -137,7 +139,7 @@ def parse_regular(reg,data):
     r = re.compile(reg)
     res = r.findall(data)
     if len(res) == 0:
-        return ""
+        return None
     return res[0]
 
 
@@ -145,7 +147,7 @@ def parse_regular(reg,data):
 def parse_json_path(json_path, json_string):
     res = jsonpath.jsonpath(json.loads(json_string), json_path)
     if len(res) == 0:
-        return ""
+        return None
     return res[0]
 
 
@@ -168,14 +170,23 @@ def form_to_json(form):
     return json.dumps(d)
 
 # 发序列化非空数据
-def create_data(api,data,serializer):
+def create_data(api,data,serializer,model):
+    flag = timezone.now()
     if not isinstance(data,list):
         return False
     for d in data:
-        for k in d:
-            if d[k] == '':
-                return False
+        if not dict_is_null(d):
+            continue
+        model.objects.filter(api_id=api.id, createTime__lt=flag).delete()
         s = serializer(data=d)
         s.is_valid(raise_exception=True)
         s.save(api=api,case=api.case, suite=api.case.suite)
+    return True
+
+
+# 判断字典的value是否存在为空的
+def dict_is_null(d):
+    for k in d:
+        if k in ["type",'pattern','name','expect'] and d[k] == "":
+            return False
     return True

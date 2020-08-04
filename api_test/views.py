@@ -1,5 +1,6 @@
 import json
 import re
+import time
 
 import jsonpath
 import requests
@@ -11,7 +12,7 @@ from rest_framework import generics, mixins, viewsets
 from rest_framework.response import Response
 from rest_framework import views
 
-from api_test.api.api import run_api, form_to_json, create_data
+from api_test.api.api import run_api, form_to_json, create_data, dict_is_null
 from utils.custom_permission import AdminPermission
 from utils import custom_token
 from utils import custom_pagination
@@ -169,76 +170,56 @@ class API(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         api = serializer.save(case=case)
-        if "APIAssert" in data:
-            assert_data = data["APIAssert"]
-            create_data(api,assert_data,serializers.APIAssertSerializer)
-        if "APIRelate" in data:
-            relate_data = data["APIRelate"]
+        if "api_assert" in data:
+            assert_data = data["api_assert"]
+            create_data(api,assert_data,serializers.APIAssertSerializer,models.APIAssert)
+        if "api_relate" in data:
+            relate_data = data["api_relate"]
             try:
-                create_data(api, relate_data, serializers.APIRelateSerializer)
+                create_data(api, relate_data, serializers.APIRelateSerializer,models.APIRelate)
             except:
                 return Response({"code": 40006, "message": "重复的变量名", "data": None})
         return Response(self.get_serializer(instance=api).data)
 
-
-
-
-
-
-
-
-
-# 断言的增删改查
-class APIAssert(viewsets.ModelViewSet):
-    queryset = models.APIAssert.objects.all()
-    serializer_class = serializers.APIAssertSerializer
-    pagination_class = custom_pagination.PageNumberPagination
-
-
-    def create(self,request,*args,**kwargs):
+    def update(self,request,*args,**kwargs):
         """
-        新增项目
+        新增接口用例
         :param request:
         :param args:
         :param kwargs:
         :return:
         """
         data = request.data
-        if "api_id" in data:
-            api_id = data.pop("api_id")
-            api = models.API.objects.filter(id=api_id).first()
-            serializer = self.get_serializer(data=data)
-            serializer.is_valid(raise_exception=True)
-            result = serializer.save(api=api)
-            return Response(self.get_serializer(instance=result).data)
+
+        api = self.get_object()
+        if api is None:
+            return Response({"code": 400013, "message": "修改的接口请求不存在", "data": None})
+
+        if "headers" in data:
+            data["headers"] = form_to_json(data["headers"])
+
+        if data["dataType"]== 'formdata' and "params" in data:
+            data["params"] = form_to_json(data["params"])
+            data["body"] = None
+        elif(data["dataType"]== 'raw'):
+            data["params"]=None
         else:
-            return Response({"code":40004,"message":"api_id 不能为空","data":None})
+            data["body"] = None
+            data["params"] = None
 
-# 接口串联的增删改查
-class APIRelate(viewsets.ModelViewSet):
-    queryset = models.APIRelate.objects.all()
-    serializer_class = serializers.APIRelateSerializer
-    pagination_class = custom_pagination.PageNumberPagination
-
-
-    def create(self,request,*args,**kwargs):
-        """
-        新增项目
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        data = request.data
-        if "api_id" in data:
-            api_id = data.pop("api_id")
-            api = models.API.objects.filter(id=api_id).first()
-            serializer = self.get_serializer(data=data)
-            serializer.is_valid(raise_exception=True)
-            result = serializer.save(api=api)
-            return Response(self.get_serializer(instance=result).data)
-        else:
-            return Response({"code":40004,"message":"api_id 不能为空","data":None})
+        serializer = self.get_serializer(instance=api,data=data)
+        serializer.is_valid(raise_exception=True)
+        api = serializer.save()
+        if "api_assert" in data:
+            assert_data = data["api_assert"]
+            create_data(api,assert_data,serializers.APIAssertSerializer,models.APIAssert)
+        if "api_relate" in data:
+            relate_data = data["api_relate"]
+            try:
+                create_data(api, relate_data, serializers.APIRelateSerializer,models.APIRelate)
+            except:
+                return Response({"code": 40006, "message": "重复的变量名", "data": None})
+        return Response(self.get_serializer(instance=api).data)
 
 
 class RunAPI(views.APIView):

@@ -58,6 +58,10 @@ def get_api_info(api_id):
 
     return method,replate_variable(url,data),replate_variable(headers,data),replate_variable(params,data),replate_variable(body,data)
 
+def run_case(host_id, case_id):
+    apis = models.TestCase.objects.get(id=case_id).case_api.all()
+    for api in apis:
+        run_api(host_id,api.id)
 
 
 # 运行接口用例

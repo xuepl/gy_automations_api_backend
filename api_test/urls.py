@@ -24,5 +24,6 @@ urlpatterns = [
 
 
     re_path(r'^runApi/?$', views.RunAPI.as_view()),
+    re_path(r'^runCase/?$', views.RunCase.as_view()),
     re_path(r'^getApiResult/(?P<pk>\d+)/?$', views.GetResult.as_view()),
 ]

@@ -192,7 +192,7 @@ class APIResult(BaseModel):
     """
     执行结果
     """
-    api = models.ForeignKey(API, on_delete=models.CASCADE, verbose_name='执行结果', related_name="api_result")
+    api = models.ForeignKey(API, on_delete=models.CASCADE, verbose_name='接口', related_name="api_result")
     request_method = models.CharField(blank=True, null=True,max_length=50, verbose_name='请求方法')
     request_url = models.TextField(blank=True, null=True,verbose_name='请求地址')
     request_headers = models.TextField(blank=True, null=True,verbose_name='请求头')
@@ -205,4 +205,13 @@ class APIResult(BaseModel):
     class Meta:
         db_table = "gy_tms_result"
 
+
+
+# class APIResultRelatetions(BaseModel):
+#     '''
+#     执行结果
+#     '''
+#     api = models.ForeignKey(API, on_delete=models.CASCADE, verbose_name='接口', related_name="api_api_result_relate")
+#     result = models.ForeignKey(APIResult, on_delete=models.CASCADE, verbose_name='执行结果', related_name="result_api_result_relate")
+#     assert_result = models.BooleanField(blank=True, null=True,verbose_name='断言结果')
 

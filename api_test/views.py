@@ -1,5 +1,6 @@
 import json
 import re
+import threading
 import time
 
 import jsonpath
@@ -12,7 +13,7 @@ from rest_framework import generics, mixins, viewsets
 from rest_framework.response import Response
 from rest_framework import views
 
-from api_test.api.api import run_api, form_to_json, create_data, dict_is_null
+from api_test.api.api import run_api, form_to_json, create_data, dict_is_null, run_case
 from utils.custom_permission import AdminPermission
 from utils import custom_token
 from utils import custom_pagination
@@ -237,6 +238,14 @@ class GetResult(views.APIView):
 
         pass
 
+
+class RunCase(views.APIView):
+
+    def post(self,request):
+        data = request.data
+        t = threading.Thread(target=run_case,args=(data["host_id"],data["case_id"]))
+        t.start()
+        return Response({"isRunCase":True})
 
 
 

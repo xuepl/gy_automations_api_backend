@@ -148,7 +148,7 @@ class APIResultSerializer(serializers.ModelSerializer):
         return [{"type":a.type,"pattern":a.pattern,"expect":a.expect} for a in results]
     def get_relate_list(self,obj):
         results = obj.api.api_relate.all()
-        return [{"type":a.type,"pattern":a.pattern,"value":a.value} for a in results]
+        return [{"type":a.type,"name":a.name,"pattern":a.pattern,"value":a.value} for a in results]
 
 
     class Meta:

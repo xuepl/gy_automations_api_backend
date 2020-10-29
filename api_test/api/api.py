@@ -95,7 +95,8 @@ def save_request_result(api_id,response):
     data["request_method"] = r.request.method
     data["request_url"] = r.request.url
     data["request_headers"] = json.dumps(dict(r.request.headers))
-    data["request_body"] = r.request.body.decode('utf-8')
+
+    data["request_body"] = r.request.body.decode('utf-8') if r.request.body else ""
     data["status_code"] = r.status_code
     data["response_headers"] = json.dumps(dict(r.headers))
     data["response_body"] = r.text
@@ -191,6 +192,6 @@ def create_data(api,data,serializer,model):
 # 判断字典的value是否存在为空的
 def dict_is_null(d):
     for k in d:
-        if k in ["type",'pattern','name','expect'] and d[k] == "":
+        if k in ["type",'name','expect'] and d[k] == "":
             return False
     return True

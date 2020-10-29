@@ -236,8 +236,6 @@ class GetResult(views.APIView):
         s = serializers.APIResultSerializer(instance=result)
         return Response(s.data)
 
-        pass
-
 
 class RunCase(views.APIView):
 
